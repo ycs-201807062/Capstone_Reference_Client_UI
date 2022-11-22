@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -9,10 +9,10 @@
 
   <ItemGroup>
     <Reference Include="NetworkLibrary">
-      <HintPath>..\..\..\Capstone_Reference_Network\DLL\Debug\net6.0\NetworkLibrary.dll</HintPath>
+      <HintPath>..\..\Capstone_Reference_Network\DLL\Debug\net6.0\NetworkLibrary.dll</HintPath>
     </Reference>
     <Reference Include="ServerToClient">
-      <HintPath>..\..\..\Capstone_Reference_Network\DLL\Debug\net6.0\ServerToClient.dll</HintPath>
+      <HintPath>..\..\Capstone_Reference_Network\DLL\Debug\net6.0\ServerToClient.dll</HintPath>
     </Reference>
   </ItemGroup>
 
