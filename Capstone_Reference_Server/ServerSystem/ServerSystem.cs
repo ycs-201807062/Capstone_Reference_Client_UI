@@ -20,7 +20,6 @@ namespace ServerSystem
 			ServerCommunicater server = ServerCommunicater.Instance;
 			server.clientAccept = AccpetRun;
 
-
 			Console.WriteLine("Server ip\t: " + Default.Network.Address);
 			Console.WriteLine("Server port\t: " + server.sep.port);
 			Console.WriteLine(server.sep.address);
