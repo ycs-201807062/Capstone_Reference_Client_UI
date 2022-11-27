@@ -212,7 +212,7 @@ namespace ServerSystem
 			user.Send(Generater.Generate(target.GetInfo()));
 		}
 
-		public void startGame(UserClient user)
+		public void StartGame(UserClient user)
 		{
 			Console.WriteLine("ClientContainer\t : Student " + user.studentID + " attempt game start");
 			// 권한 확인

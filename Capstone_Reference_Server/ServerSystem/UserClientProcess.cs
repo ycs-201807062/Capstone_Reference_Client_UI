@@ -175,10 +175,7 @@ namespace ServerSystem
 
 		private void GameProcess(ReceiveResult result)
 		{
-
-			
-
-
+			ClientContainer.Instance.StartGame(this);
 		}
 
 	}
