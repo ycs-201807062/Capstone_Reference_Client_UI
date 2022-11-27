@@ -93,5 +93,10 @@ namespace ServerSystem
 
 			Console.WriteLine("UserDeleted\n");
 		}
+
+		public UserProtocol.USER GetInfo()
+		{
+			return new(studentID, name, name);
+		}
 	}
 }

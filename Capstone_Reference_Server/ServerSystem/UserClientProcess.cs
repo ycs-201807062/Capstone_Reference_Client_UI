@@ -23,7 +23,7 @@ namespace ServerSystem
 			if (!semaphore.WaitOne(10))
 				return;
 
-			Console.WriteLine(studentID + "\t: Semaphore is assigned.");
+			Console.WriteLine(studentID + "\t: Semaphore is assigned.---------------------------");
 			// Receive 큐가 빌때까지 반복
 			while (!IsEmpty())
 			{
@@ -46,7 +46,7 @@ namespace ServerSystem
 			}
 
 			// 세마포어 반환
-			Console.WriteLine(studentID + "\t: Semaphore is returned.\n\n");
+			Console.WriteLine(studentID + "\t: Semaphore is returned.---------------------------\n\n");
 			semaphore.Release();
 		}
 
@@ -66,16 +66,15 @@ namespace ServerSystem
 				Console.WriteLine("already logged in");
 				return;
 			}
-
-			// 컨테이너 등록 성공 시
-			if(ClientContainer.Instance.AddUser(this, ref login))
+			// 컨테이너 등록 실패 시
+			if(!ClientContainer.Instance.AddUser(this, ref login))
 			{
-				this.Login(login);
-				Console.WriteLine("Login Success");
+				Console.WriteLine("Login Failed");
 				return;
 			}
 
-			Console.WriteLine("Login Failed");
+			ClientContainer.Instance.SendUserList(this);
+			Console.WriteLine("Login Success");
 		}
 
 		private void LogoutProcess(ReceiveResult result)
@@ -113,22 +112,30 @@ namespace ServerSystem
 			if (userInfo == null)
 				return;
 
-			// 로그인 상태가 아니라면 종료
+			// 내가 로그인 상태가 아니라면 종료
 			if (!isLogin)
 			{
 				Console.WriteLine("\t: not logged in");
 				return;
 			}
 
-			// 유저 정보 변경
+			// 유저 정보 변경 (시퀀스 번호와 나의 정보가 같다면)
 			if(userInfo.seqNo == seqNo && userInfo.studentID == studentID)
 			{
 				Console.WriteLine(studentID + "\t: Attempt userdata modify");
 				modifyUserInfo(userInfo);
 			}
+			
+			// 삭제 요청인 경우
+			if(-1 == userInfo.seqNo)
+			{
+				// 해당 유저를 삭제시도 한다.
+				ClientContainer.Instance.RemoveUser(this,userInfo.studentID);
+			}
 
 			// 유저 데이터 요청
 			Console.WriteLine(studentID + "\t: Attempt get userdata");
+
 		}
 
 		private void MessageProcess(ReceiveResult result)
@@ -149,7 +156,7 @@ namespace ServerSystem
 			}
 
 			// 자신의 seqNo가 일치하지 않다면 종료
-			if (message.check(studentID,seqNo))
+			if (!message.check(studentID,seqNo))
 			{
 				Console.WriteLine(studentID + "\t: studentID or seqCode different");
 				return;
@@ -157,7 +164,7 @@ namespace ServerSystem
 
 			Console.WriteLine(studentID + "\t: Sending Message");
 
-			if (message.targetID == 0)
+			if (0 == message.targetID)
 				ClientContainer.Instance.SendMessage(ref message);
 			else
 				ClientContainer.Instance.SendWhisperMessage(ref message);
