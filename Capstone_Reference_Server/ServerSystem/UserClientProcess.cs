@@ -42,6 +42,9 @@ namespace ServerSystem
 					case DataType.USER:
 						UserProcess(result);
 						break;
+					case DataType.GAME_START:
+						GameProcess(result);
+						break;
 				}
 			}
 
@@ -169,5 +172,14 @@ namespace ServerSystem
 			else
 				ClientContainer.Instance.SendWhisperMessage(ref message);
 		}
+
+		private void GameProcess(ReceiveResult result)
+		{
+
+			
+
+
+		}
+
 	}
 }
