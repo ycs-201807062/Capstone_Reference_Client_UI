@@ -34,5 +34,10 @@ namespace ServerSystem
 			// 새로운 유저 생성
 			new UserClient(client.tcpClient);
 		}
+
+		static public void Stop()
+		{
+			ServerCommunicater.Instance.Stop();
+		}
 	}
 }
