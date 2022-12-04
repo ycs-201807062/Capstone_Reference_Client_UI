@@ -15,11 +15,13 @@ namespace ServerSystem
 {
 	public class ClientContainer
 	{
-		private Dictionary<int, UserClient> loginDict;
+		public Dictionary<int, UserClient> loginDict;
 
 		private static UserClient? owner;
 
 		private static int seq = 1;
+
+		public bool blockSend = false;
 
 		// 싱글톤 구현
 		static private ClientContainer? instance;
@@ -156,6 +158,16 @@ namespace ServerSystem
 
 		public void SendMessage(ref MessageProtocol.MESSAGE msg)
 		{
+			// 현재 채팅이 막혀있다면
+			if(blockSend)
+			{
+				// 보내는 사람이 교수가 아니라면
+				// 추후 수정 필요
+				if(-1 != msg.studentID)
+				{
+					return;
+				}
+			}
 			var value = Generater.Generate(msg);
 			foreach(var i in loginDict)
 			{

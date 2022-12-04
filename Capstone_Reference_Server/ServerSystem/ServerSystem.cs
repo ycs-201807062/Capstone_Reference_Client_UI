@@ -12,18 +12,22 @@ namespace ServerSystem
 {
 	public class ServerSystem
 	{
+		ServerCommunicater server;
+		ClientContainer clientContainer;
 		public ServerSystem()
 		{
 			Console.WriteLine("Server Start");
 
 			// 서버 생성
-			ServerCommunicater server = ServerCommunicater.Instance;
+			server = ServerCommunicater.Instance;
 			server.clientAccept = AccpetRun;
 
 			Console.WriteLine("Server ip\t: " + Default.Network.Address);
 			Console.WriteLine("Server port\t: " + server.sep.port);
 			Console.WriteLine(server.sep.address);
 			Console.WriteLine(server.sep.Listener.Server.AddressFamily);
+
+			clientContainer = ClientContainer.Instance;
 		}
 		static public void AccpetRun(Client client)
 		{
@@ -38,6 +42,11 @@ namespace ServerSystem
 		static public void Stop()
 		{
 			ServerCommunicater.Instance.Stop();
+		}
+
+		public void SetMessageBlock(bool state)
+		{
+			clientContainer.blockSend = state;
 		}
 	}
 }
