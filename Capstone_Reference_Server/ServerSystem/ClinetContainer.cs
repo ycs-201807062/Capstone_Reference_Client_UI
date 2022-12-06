@@ -145,13 +145,25 @@ namespace ServerSystem
 			loginDict.TryGetValue(studentID, out var value);
 			if (null == value)
 			{
-				Console.WriteLine("ClientContainer\t : dosenExist");
+				Console.WriteLine("ClientContainer\t : dosen't Exist");
 				return;
 			}
 
 			loginDict.Remove(studentID);
 			value.Stop();
 			Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
+		}
+
+		public void KickUser(int studentID)
+		{
+			loginDict.TryGetValue(studentID, out var value);
+			if (null == value)
+			{
+				Console.WriteLine("ClientContainer\t : dosen't Exist");
+				return;
+			}
+			loginDict.Remove(studentID);
+			value.Stop();
 		}
 
 		public int GetSeq()
