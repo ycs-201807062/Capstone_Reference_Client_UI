@@ -149,8 +149,9 @@ namespace ServerSystem
 				return;
 			}
 
-			loginDict.Remove(studentID);
 			value.Stop();
+			loginDict.Remove(studentID);
+			
 			Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
 		}
 
@@ -162,8 +163,10 @@ namespace ServerSystem
 				Console.WriteLine("ClientContainer\t : dosen't Exist");
 				return;
 			}
-			loginDict.Remove(studentID);
+
 			value.Stop();
+			loginDict.Remove(studentID);
+			
 
 			Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
 		}
