@@ -164,6 +164,8 @@ namespace ServerSystem
 			}
 			loginDict.Remove(studentID);
 			value.Stop();
+
+			Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
 		}
 
 		public int GetSeq()
@@ -230,8 +232,13 @@ namespace ServerSystem
 		{
 			foreach (var user in loginDict)
 			{
-				//Console.WriteLine("user : " + user.Value.studentID);
-				target.Send(Generater.Generate(user.Value.GetInfo()));
+				// Console.WriteLine("user : " + user.Value.studentID);
+				// target.Send(Generater.Generate(user.Value.GetInfo()));
+
+				UserProtocol.USER tempUser = new();
+				tempUser.studentID = user.Value.studentID;
+				tempUser.name = user.Value.name;
+				target.Send(Generater.Generate(tempUser));
 			}
 		}
 
