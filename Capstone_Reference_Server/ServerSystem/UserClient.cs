@@ -70,7 +70,7 @@ namespace ServerSystem
 		}
 
 		// 어떠한 이유에든 수신이 종료되면 발생할 메소드
-		private void Stop()
+		public void Stop()
 		{
 			Console.WriteLine(studentID + "\t: Stop Signal Generation");
 

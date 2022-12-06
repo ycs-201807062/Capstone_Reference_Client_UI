@@ -135,15 +135,23 @@ namespace ServerSystem
 		// owner가 상대방을 지움
 		public void RemoveUser(UserClient user, int studentID)
 		{
-			Console.WriteLine("ClientContainer\t : Student " + user.studentID + " remove");
+			Console.WriteLine("ClientContainer\t : Student " + studentID + " remove");
 
-			if(CheckOwner(user))
+			if(!CheckOwner(user))
 			{
-				loginDict.Remove(studentID);
-				Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
+				Console.WriteLine("ClientContainer\t : No Permissions to Delete");
 				return;
 			}
-			Console.WriteLine("ClientContainer\t : No Permissions to Delete");
+			loginDict.TryGetValue(studentID, out var value);
+			if (null == value)
+			{
+				Console.WriteLine("ClientContainer\t : dosenExist");
+				return;
+			}
+
+			loginDict.Remove(studentID);
+			value.Stop();
+			Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
 		}
 
 		public int GetSeq()
@@ -231,10 +239,20 @@ namespace ServerSystem
 			if (CheckOwner(user))
 			{
 				// 시작 데이터 전송
-				Send(Generater.Generate(new GameStartProtocol.GameStart()));
+				Send(Generater.Generate(new GameStartProtocol.GameStart().meanless = 0));
 				return;
 			}
 			return;
+		}
+
+		public void PrtUsers()
+		{
+			Console.WriteLine("-----------------------UserList-----------------------");
+			foreach (var user in loginDict)
+			{
+				Console.WriteLine("UserCode\t" + user.Value.studentID + "UserName\t" + user.Value.name);
+			}
+			Console.WriteLine("------------------------------------------------------");
 		}
 	}
 }
