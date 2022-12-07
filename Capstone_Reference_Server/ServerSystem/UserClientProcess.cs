@@ -138,7 +138,7 @@ namespace ServerSystem
 
 			// 유저 데이터 요청
 			Console.WriteLine(studentID + "\t: Attempt get userdata");
-
+			ClientContainer.Instance.SendUserInfo(this,userInfo.studentID);
 		}
 
 		private void MessageProcess(ReceiveResult result)

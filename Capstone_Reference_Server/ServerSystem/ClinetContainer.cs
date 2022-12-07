@@ -166,7 +166,6 @@ namespace ServerSystem
 
 			value.Stop();
 			loginDict.Remove(studentID);
-			
 
 			Send(Generater.Generate(new UserProtocol.USER(studentID, "", "", -1)));
 		}
@@ -261,7 +260,7 @@ namespace ServerSystem
 			if (CheckOwner(user))
 			{
 				// 시작 데이터 전송
-				Send(Generater.Generate(new GameStartProtocol.GameStart().meanless = 0));
+				Send(Generater.Generate(new GameStartProtocol.GameStart().meanless = 96));
 				return;
 			}
 			return;
