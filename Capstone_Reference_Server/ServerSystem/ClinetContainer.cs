@@ -260,7 +260,9 @@ namespace ServerSystem
 			if (CheckOwner(user))
 			{
 				// 시작 데이터 전송
-				Send(Generater.Generate(new GameStartProtocol.GameStart().meanless = 96));
+				GameStartProtocol.GameStart gs = new GameStartProtocol.GameStart();
+				gs.meanless = 96;
+				Send(Generater.Generate(gs));
 				return;
 			}
 			return;

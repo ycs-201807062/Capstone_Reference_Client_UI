@@ -175,6 +175,7 @@ namespace ServerSystem
 
 		private void GameProcess(ReceiveResult result)
 		{
+			Console.WriteLine(studentID + "\t: Attempt GameStart");
 			ClientContainer.Instance.StartGame(this);
 		}
 
