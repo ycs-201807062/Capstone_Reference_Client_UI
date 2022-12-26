@@ -236,11 +236,13 @@ namespace ServerSystem
 			{
 				// Console.WriteLine("user : " + user.Value.studentID);
 				// target.Send(Generater.Generate(user.Value.GetInfo()));
-
+				/*
 				UserProtocol.USER tempUser = new();
 				tempUser.studentID = user.Value.studentID;
 				tempUser.name = user.Value.name;
-				target.Send(Generater.Generate(tempUser));
+				*/
+
+				target.Send(Generater.Generate(user.Value.GetInfo()));
 			}
 		}
 
